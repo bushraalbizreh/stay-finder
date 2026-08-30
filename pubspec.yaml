@@ -38,6 +38,8 @@ dependencies:
   shared_preferences: ^2.2.3
   flutter_screenutil: ^5.9.3
   smooth_page_indicator: ^3.0.0
+  provider: ^6.1.5+1
+  get_it: ^9.2.1
 
 dev_dependencies:
   flutter_test:

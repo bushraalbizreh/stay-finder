@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../widgets/navigation_buttom_bar_widget.dart';
+
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
 
@@ -30,7 +32,15 @@ class DetailsScreen extends StatelessWidget {
                         mainAxisAlignment: .spaceBetween,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      BottomNavigationBarWidget(),
+                                ),
+                              );
+                            },
                             icon: Icon(Icons.arrow_back, color: Colors.black),
                           ),
 
@@ -343,87 +353,112 @@ and unhurried. ''',
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(8),
                                   child: Column(
                                     mainAxisAlignment: .start,
                                     crossAxisAlignment: .start,
                                     children: [
                                       Row(
                                         crossAxisAlignment: .start,
-                                        mainAxisAlignment: .spaceEvenly,
+                                        mainAxisAlignment: .start,
 
                                         spacing: 120,
                                         children: [
                                           Text(
-                                            'Amanera Resort',
+                                            'Deluxe King Room',
                                             style: TextStyle(
                                               fontSize: 20.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFF99462A),
+                                              fontWeight: FontWeight.w700,
+
                                               fontFamily:
                                                   'Montserrat-VariableFont_wght',
                                             ),
                                           ),
-                                          Icon(Icons.close, color: Colors.grey),
                                         ],
                                       ),
-                                      Text(
-                                        "Ocean View Suite • 2 Guests",
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily:
-                                              'Montserrat-VariableFont_wght',
-                                        ),
-                                      ),
+
                                       SizedBox(height: 10.h),
-                                      SizedBox(
-                                        child: Container(
-                                          width: 220.w,
-                                          height: 44.h,
-                                          color: Color(0xFFF4F3F1),
-                                          child: Row(
-                                            spacing: 4,
-                                            children: [
-                                              Icon(Icons.calendar_month),
-                                              Text(
-                                                'Oct 12 - Oct 15 (3 Nights)',
-                                              ),
-                                            ],
+                                      Row(
+                                        spacing: 10,
+                                        children: [
+                                          Chip(
+                                            backgroundColor: Color(0xFFF4F3F1),
+
+                                            label: Row(
+                                              spacing: 4,
+                                              children: [
+                                                Icon(
+                                                  Icons.aspect_ratio_outlined,
+                                                  color: Color(0xFF55433D),
+                                                ),
+                                                Text('32 sqm'),
+                                              ],
+                                            ),
                                           ),
+
+                                          Chip(
+                                            backgroundColor: Color(0xFFF4F3F1),
+
+                                            label: Row(
+                                              spacing: 4,
+                                              children: [
+                                                Icon(
+                                                  Icons.single_bed_outlined,
+                                                  color: Color(0xFF55433D),
+                                                ),
+                                                Text('1 King Bed'),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        child: Divider(
+                                          color: Color(0xFFDBC1B9),
                                         ),
                                       ),
+
                                       SizedBox(height: 10.h),
 
                                       Row(
-                                        mainAxisAlignment: .spaceAround,
+                                        mainAxisAlignment: .spaceBetween,
                                         children: [
-                                          FilledButton(
+                                          Text.rich(
+                                            TextSpan(
+                                              text: "\$165",
+                                              children: [
+                                                TextSpan(
+                                                  text: " night",
+                                                  style: TextStyle(
+                                                    color: Color(0xFF5F5E5E),
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily:
+                                                        'Montserrat-VariableFont_wght',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          OutlinedButton(
                                             onPressed: () {},
-                                            style: FilledButton.styleFrom(
-                                              backgroundColor: Color(
-                                                0XFFEFEEEB,
+                                            style: OutlinedButton.styleFrom(
+                                              foregroundColor: Color(
+                                                0xFF99462A,
+                                              ),
+                                              side: BorderSide(
+                                                color: Color(0xFF99462A),
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadiusGeometry.circular(
+                                                      12.r,
+                                                    ),
                                               ),
                                             ),
                                             child: Text(
-                                              "Partially Refundable",
-                                              style: TextStyle(
-                                                color: Color(0xFF5F5E5E),
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily:
-                                                    'Montserrat-VariableFont_wght',
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            "\$2,450",
-                                            style: TextStyle(
-                                              color: Color(0xFF99462A),
-                                              fontSize: 24.sp,
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily:
-                                                  'Montserrat-VariableFont_wght',
+                                              "Select",
+                                              //  style: TextStyle(color: Color(0xFFD97757)),
                                             ),
                                           ),
                                         ],

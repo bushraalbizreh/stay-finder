@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stayfinder/core/constants/on_boarding_data.dart';
-import 'package:stayfinder/widgets/navigation_buttom_bar_widget.dart';
+import 'package:stayfinder/pages/login_screen.dart';
 import '../models/onboarding_model.dart';
-import 'home_screen.dart';
+import '../widgets/navigation_buttom_bar_widget.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -79,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  NavigationBottomBarWidget(),
+                                                  BottomNavigationBarWidget(),
                                             ),
                                           );
                                         },
@@ -112,7 +112,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 color: Colors.black87,
                               ),
                             ),
-
                             Text(
                               page.description,
                               style: TextStyle(
@@ -121,7 +120,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ),
                             SizedBox(height: 43.h),
-
                             Row(
                               children: [
                                 SmoothPageIndicator(
@@ -148,7 +146,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                NavigationBottomBarWidget(),
+                                                LoginScreen(),
                                           ),
                                         );
                                       }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../widgets/custom_text_form_field.dart';
+import '../widgets/navigation_buttom_bar_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -101,7 +101,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 284,
                             //  padding: EdgeInsets.symmetric(vertical: 24.w),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                  Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>BottomNavigationBarWidget(),
+                            ),
+                          );
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Color(0xFFD97757),
                                 shape: RoundedRectangleBorder(

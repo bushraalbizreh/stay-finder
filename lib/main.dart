@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stayfinder/core/providers/theme_provider.dart';
+import 'package:stayfinder/core/theme/app_theme.dart';
 import 'package:stayfinder/pages/cart_screen.dart';
 import 'package:stayfinder/pages/details_screen.dart';
 import 'package:stayfinder/pages/favorite_screen.dart';
@@ -7,11 +10,13 @@ import 'package:stayfinder/pages/home_screen.dart';
 import 'package:stayfinder/pages/login_screen.dart';
 import 'package:stayfinder/pages/profile_screen.dart';
 import 'package:stayfinder/pages/search_screen.dart';
-import 'package:stayfinder/widgets/navigation_buttom_bar_widget.dart';
 
+import 'core/config/get_it.dart';
 import 'pages/splash_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setup();
   runApp(MyApp());
 }
 
@@ -20,22 +25,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(390, 902),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (_, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'First Method',
-          // theme: ThemeData(
-          //   primarySwatch: Colors.blue,
-          //   textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
-          // ),
-          home: child,
-        );
-      },
-      child: DetailsScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => ThemeProvider()..loadTheme(),
+      child: Builder(
+        builder: (context) {
+          return ScreenUtilInit(
+            designSize: const Size(390, 902),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (_, child) {
+              return Consumer<ThemeProvider>(
+                builder: (context, theme, _) => MaterialApp(
+                  theme: AppTheme.lightTheme,
+                  darkTheme: AppTheme.darkTheme,
+                  debugShowCheckedModeBanner: false,
+                  themeMode: theme.isDarkTheme
+                      ? ThemeMode.dark
+                      : ThemeMode.light,
+                  home: Splash(),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

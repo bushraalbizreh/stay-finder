@@ -4,15 +4,15 @@ import 'package:stayfinder/pages/favorite_screen.dart';
 import 'package:stayfinder/pages/home_screen.dart';
 import 'package:stayfinder/pages/profile_screen.dart';
 
-class NavigationBottomBarWidget extends StatefulWidget {
-  const NavigationBottomBarWidget({super.key});
+class BottomNavigationBarWidget extends StatefulWidget {
+  const BottomNavigationBarWidget({super.key});
 
   @override
-  State<NavigationBottomBarWidget> createState() =>
-      _NavigationBottomBarWidgetState();
+  State<BottomNavigationBarWidget> createState() =>
+     BottomNavigationBarWidgetState();
 }
 
-class _NavigationBottomBarWidgetState extends State<NavigationBottomBarWidget> {
+class BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   int currentPageIndex = 0;
 
   List<Widget> pages = [

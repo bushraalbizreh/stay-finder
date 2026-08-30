@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stayfinder/pages/details_screen.dart';
+import 'package:stayfinder/pages/search_screen.dart';
+import 'package:stayfinder/widgets/custom_text_form_field.dart';
 
 import '../widgets/custom_card.dart';
 
@@ -10,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color(0xFFFAF9F6),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -69,7 +73,6 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   width: 350.w,
                   height: 157.h,
-
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
@@ -89,31 +92,15 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
 
-                        TextFormField(
-                          obscureText: true,
-
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color(0xFFFAF9F6),
-                            hintText: "Search destinations, hotels...",
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Color(0xFF5F5E5E),
-                            ),
-
-                            hintStyle: TextStyle(color: Color(0xFFC8C6C6)),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFDBC1B9)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFDBC1B9)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFDBC1B9)),
-                            ),
-
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFDBC1B9)),
+                        CustomTextField(
+                          filled: true,
+                          fillColor: Color(0xFFFAF9F6),
+                          prefixIcon: Icons.search,
+                          hintText: "Search destinations, hotels...",
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchScreen(),
                             ),
                           ),
                         ),
@@ -335,8 +322,7 @@ premium villas and resorts.''',
                           ),
                           SizedBox(height: 6.h),
                           Text(
-                            '''Quick escapes curated for ultimate
-relaxation. ''',
+                            '''Quick escapes curated for ultimate relaxation. ''',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
@@ -393,78 +379,94 @@ relaxation. ''',
                 SizedBox(height: 24.h),
                 SizedBox(
                   width: 390.w,
-                  height: 413.h,
+                  height: 450.h,
                   child: ListView.builder(
                     itemCount: 6,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return CustomCard(
-                        height: 413.h,
-                        width: 264.w,
-                        image: "assets/images/image1.png",
-                        favoriteIcon: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: AlignmentGeometry.xy(1, 1),
-                            child: CircleAvatar(
-                              maxRadius: 20,
-                              backgroundColor: Color(0xFFFAF9F6),
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.favorite_outline,
-                                  color: Colors.black,
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailsScreen(),
+                            ),
+                          );
+                        },
+                        child: CustomCard(
+                          height: 413.h,
+                          width: 264.w,
+                          image: "assets/images/image1.png",
+                          favoriteIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: AlignmentGeometry.xy(1, 1),
+                              child: CircleAvatar(
+                                maxRadius: 20,
+                                backgroundColor: Color(0xFFFAF9F6),
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.favorite_outline,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        content: Column(
-                          crossAxisAlignment: .start,
-                          mainAxisAlignment: .start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: .spaceEvenly,
+                          content: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: .start,
+                              mainAxisAlignment: .start,
                               children: [
-                                Text(
-                                  'Casa Verde Hotel',
-                                  style: TextStyle(
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat-VariableFont_wght',
-                                  ),
+                                Row(
+                                  spacing: 3.w,
+                                  crossAxisAlignment: .start,
+                                  //    mainAxisAlignment: .spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Casa Verde Hotel',
+                                      style: TextStyle(
+                                        fontSize: 24.sp,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily:
+                                            'Montserrat-VariableFont_wght',
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(2),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFEFEEEB),
+                                        borderRadius: BorderRadius.circular(90),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.star_rate,
+                                            size: 14,
+                                            color: Color(0xFFD97757),
+                                          ),
+                                          Text(
+                                            '4.9',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(2),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFEFEEEB),
-                                    borderRadius: BorderRadius.circular(90),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.star_rate,
-                                        size: 14,
-                                        color: Color(0xFFD97757),
-                                      ),
-                                      Text(
-                                        '4.9',
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                    ],
+                                Text(
+                                  "Amsterdam, Netherlands",
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Montserrat-VariableFont_wght',
                                   ),
                                 ),
                               ],
                             ),
-                            Text(
-                              "Amsterdam, Netherlands",
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Montserrat-VariableFont_wght',
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       );
                     },

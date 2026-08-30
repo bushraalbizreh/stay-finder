@@ -8,6 +8,10 @@ class CustomCard extends StatelessWidget {
   final String image;
   final Widget? favoriteIcon;
   final Widget content;
+  final Widget? review;
+  final Widget? classification;
+  final double? imageHeight;
+  final double? imageWidth;
 
   const CustomCard({
     Key? key,
@@ -15,6 +19,10 @@ class CustomCard extends StatelessWidget {
     this.width,
     required this.image,
     this.favoriteIcon,
+    this.review,
+    this.classification,
+    this.imageHeight = 256,
+    this.imageWidth = 262,
     required this.content,
   }) : super(key: key);
 
@@ -34,14 +42,18 @@ class CustomCard extends StatelessWidget {
           Stack(
             children: [
               SizedBox(
-                width: 262.w,
-                height: 256.h,
+                width: imageWidth!.w,
+                height: imageHeight!.h,
                 child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(12),
                   child: Image.asset(image, fit: BoxFit.fill),
                 ),
               ),
-              ?favoriteIcon,
+              Row(
+                mainAxisAlignment: .end,
+                spacing: 130.w,
+                children: [?classification, ?favoriteIcon],
+              ),
             ],
           ),
           Padding(
@@ -61,23 +73,33 @@ class CustomCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10.h),
-                Text.rich(
-                  TextSpan(
-                    text: "\$145",
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat-VariableFont_wght',
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: .start,
+                    spacing: 130.w,
                     children: [
-                      TextSpan(
-                        text: '/ night',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Montserrat-VariableFont_wght',
+                      Text.rich(
+                        TextSpan(
+                          text: "\$145",
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat-VariableFont_wght',
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '/night',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Montserrat-VariableFont_wght',
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                      ?review,
                     ],
                   ),
                 ),
