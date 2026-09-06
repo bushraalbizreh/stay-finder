@@ -14,7 +14,7 @@ class ThemeProvider extends ChangeNotifier {
   void toggleTheme() {
     bool previousTheme =
         getIt.get<SharedPreferences>().getBool(AppKeys.isDarkThemeKey) ?? false;
-    isDarkTheme != previousTheme;
+    isDarkTheme = !previousTheme;
     getIt.get<SharedPreferences>().setBool(AppKeys.isDarkThemeKey, isDarkTheme);
     notifyListeners();
   }

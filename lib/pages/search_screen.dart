@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stayfinder/widgets/custom_text_form_field.dart';
 
+import '../providers/stay_provider.dart';
+import '../models/stay_model.dart';
 import '../widgets/custom_card.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -16,158 +19,162 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "StayFinder",
-            style: TextStyle(
-              color: Color(0xFF99462A),
-              fontSize: 32.sp,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Montserrat-VariableFont_wght',
-            ),
-          ),
-        ),
-        body: Column(
-          children: [
-            Container(
-              width: 350.w,
-              height: 98.h,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24.r),
-              ),
-              child: CustomTextField(
-                controller: query,
-                hintText: "Search destinations...",
-                filled: true,
-                prefixIcon: Icons.search,
-                fillColor: Color(0xFFEFEEEB),
-                keyboardType: TextInputType.text,
+    return Builder(
+      builder: (context) {
+        StayProvider stayProvider = context.watch<StayProvider>();
+
+        return SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "StayFinder",
+                style: Theme.of(context).appBarTheme.titleTextStyle,
               ),
             ),
+            body: Column(
+              children: [
+                Container(
+                  width: 350.w,
+                  height: 98.h,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24.r),
+                  ),
+                  child: CustomTextField(
+                    controller: query,
+                    hintText: "Search destinations...",
+                    filled: true,
+                    prefixIcon: Icons.search,
+                    fillColor: Color(0xFFEFEEEB),
+                    keyboardType: TextInputType.text,
+                  ),
+                ),
 
-            Flexible(
-              child: ListView.builder(
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.w,
-                      vertical: 8.h,
-                    ),
-                    child: CustomCard(
-                      imageWidth: 370.w,
-                      imageHeight: 260.h,
-                      height: 408.h,
-
-                      image: "assets/images/image1.png",
-                      review: Text(
-                        "(124 reviews)",
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF55433D),
+                Flexible(
+                  child: ListView.builder(
+                    itemCount: stayProvider.stays.length,
+                    itemBuilder: (context, index) {
+                      List<StayModel> stay = stayProvider.stays;
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 8.h,
                         ),
-                      ),
-                      classification: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                        child: FilledButton(
-                          onPressed: () {},
-                          style: FilledButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            side: BorderSide(color: Color(0xFFDBC1B9)),
-                          ),
-                          child: Text(
-                            "Boutique Hotel",
+                        child: CustomCard(
+                          imageWidth: 370.w,
+                          imageHeight: 260.h,
+                          height: 408.h,
+
+                          image: stay[index].image!,
+                          review: Text(
+                            "(${stay[index].reviewsCount}reviews)",
                             style: TextStyle(
-                              fontSize: 12,
+                              decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w400,
+                              color: Color(0xFF55433D),
                             ),
                           ),
-                        ),
-                      ),
-                      favoriteIcon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: AlignmentGeometry.xy(1, 1),
-                          child: CircleAvatar(
-                            maxRadius: 20,
-                            backgroundColor: Color(0xFFFAF9F6),
-                            child: IconButton(
+                          classification: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.h),
+                            child: FilledButton(
                               onPressed: () {},
-                              icon: Icon(
-                                Icons.favorite_outline,
-                                color: Colors.black,
+                              style: FilledButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                                side: BorderSide(color: Color(0xFFDBC1B9)),
+                              ),
+                              child: Text(
+                                stay[index].category!,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      content: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: .start,
-                          mainAxisAlignment: .start,
-                          children: [
-                            Row(
-                              //  mainAxisAlignment: .spaceEvenly,
-                              crossAxisAlignment: .start,
-                              spacing: 80.w,
-                              children: [
-                                Text(
-                                  'Casa Verde Hotel',
-                                  style: TextStyle(
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat-VariableFont_wght',
+                          favoriteIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: AlignmentGeometry.xy(1, 1),
+                              child: CircleAvatar(
+                                maxRadius: 20,
+                                backgroundColor: Color(0xFFFAF9F6),
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.favorite_outline,
+                                    color: Colors.black,
                                   ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(2),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFEFEEEB),
-                                    borderRadius: BorderRadius.circular(90),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.star_rate,
-                                        size: 14,
-                                        color: Color(0xFFD97757),
+                              ),
+                            ),
+                          ),
+                          price: stay[index].price,
+                          content: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: .start,
+                              mainAxisAlignment: .start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: .spaceBetween,
+                                  crossAxisAlignment: .start,
+
+                                  children: [
+                                    Text(
+                                      stay[index].name!,
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily:
+                                            'Montserrat-VariableFont_wght',
                                       ),
-                                      Text(
-                                        '4.9',
-                                        style: TextStyle(fontSize: 12),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(2),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFEFEEEB),
+                                        borderRadius: BorderRadius.circular(90),
                                       ),
-                                    ],
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.star_rate,
+                                            size: 14,
+                                            color: Color(0xFFD97757),
+                                          ),
+                                          Text(
+                                            stay[index].rating.toString(),
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  '${stay[index].location!.city.toString()},${stay[index].location!.country.toString()}',
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Montserrat-VariableFont_wght',
                                   ),
                                 ),
                               ],
                             ),
-                            Text(
-                              "Amsterdam, Netherlands",
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Montserrat-VariableFont_wght',
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

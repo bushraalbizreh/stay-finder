@@ -2,7 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stayfinder/pages/login_screen.dart';
+import 'package:stayfinder/widgets/navigation_buttom_bar_widget.dart';
 
+import '../core/providers/app_provider.dart';
 import 'on_boarding_screen.dart';
 
 class Splash extends StatefulWidget {
@@ -15,13 +19,33 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
-      );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Timer(Duration(seconds: 3), () {
+        context.read<AppProvider>();
+        print(
+          "isFirstTime : ${context.read<AppProvider>().isCompleteOnBoarding}",
+        );
+        print("Auth : ${context.read<AppProvider>().isAuthenticated}");
+        if (context.read<AppProvider>().isCompleteOnBoarding == false) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => OnboardingScreen()),
+          );
+        } else {
+          if (context.read<AppProvider>().isAuthenticated) {
+           Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNavigationBarWidget()),
+          );
+          } else {
+         Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+          );
+          }
+        }
+      });
     });
-
     super.initState();
   }
 
@@ -41,12 +65,7 @@ class _SplashState extends State<Splash> {
             ),
             Text(
               "StayFinder",
-              style: TextStyle(
-                color: Color(0xFF99462A),
-                fontSize: 32.spMin,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Montserrat-VariableFont_wght',
-              ),
+              style: Theme.of(context).appBarTheme.titleTextStyle,
             ),
             SizedBox(height: 48.h),
             CircularProgressIndicator(color: Color(0xFF99462A)),

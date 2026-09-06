@@ -12,6 +12,7 @@ class CustomCard extends StatelessWidget {
   final Widget? classification;
   final double? imageHeight;
   final double? imageWidth;
+  final int? price;
 
   const CustomCard({
     Key? key,
@@ -22,7 +23,10 @@ class CustomCard extends StatelessWidget {
     this.review,
     this.classification,
     this.imageHeight = 256,
-    this.imageWidth = 262,
+    //  this.imageWidth = 262,
+    this.imageWidth = 350,
+
+    this.price,
     required this.content,
   }) : super(key: key);
 
@@ -34,6 +38,7 @@ class CustomCard extends StatelessWidget {
       margin: EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: Colors.white,
+        //  color: Theme.of(context).secondaryHeaderColor,
         border: Border.all(color: Color(0xFFDBC1B9)),
         borderRadius: BorderRadius.circular(12),
       ),
@@ -46,7 +51,19 @@ class CustomCard extends StatelessWidget {
                 height: imageHeight!.h,
                 child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(12),
-                  child: Image.asset(image, fit: BoxFit.fill),
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Icon(
+                          Icons.warning_outlined,
+                          color: Colors.red,
+                          size: 100,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               Row(
@@ -81,7 +98,7 @@ class CustomCard extends StatelessWidget {
                     children: [
                       Text.rich(
                         TextSpan(
-                          text: "\$145",
+                          text: "\$${price.toString()}",
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.bold,

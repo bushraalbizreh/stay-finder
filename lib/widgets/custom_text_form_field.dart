@@ -6,9 +6,9 @@ class CustomTextField extends StatelessWidget {
   final bool filled;
   final Color fillColor;
   final IconData? prefixIcon;
-  final IconData? suffixIcon;
+  final IconButton? suffixIcon;
   final String hintText;
-  final TextStyle? hinteStyle;
+  final TextStyle? hintStyle;
   final String? Function(String?)? validator;
   final void Function(String?)? onFieldSubmitted;
   final bool? obscureText;
@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     required this.hintText,
-    this.hinteStyle,
+    this.hintStyle,
     this.validator,
     this.onFieldSubmitted,
     this.obscureText,
@@ -37,30 +37,24 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
+        
         filled: filled,
         fillColor: fillColor,
         hintStyle: TextStyle(color: Color(0xFFC8C6C6)),
         prefixIcon: prefixIcon != null
             ? Icon(prefixIcon, color: Color(0xFF5F5E5E))
             : null,
-        suffixIcon: suffixIcon != null
-            ? IconButton(
-                icon: Icon(suffixIcon, color: Color(0xFF5F5E5E)),
-                onPressed: onSuffixIconPressed != null
-                    ? () {
-                        onSuffixIconPressed!();
-                      }
-                    : () {
-                        // if (obscureText != null) {
-                        //   obscureText!.value = !obscureText!.value;
-                        // }
-                      },
-              )
-            : null,
+            
+        suffixIcon: suffixIcon,
+      
+        
+          
         hintText: hintText,
+      
         border: OutlineInputBorder(
           borderSide: BorderSide(color: Color(0xFFDBC1B9)),
         ),

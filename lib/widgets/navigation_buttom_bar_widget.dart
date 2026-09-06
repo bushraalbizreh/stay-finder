@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stayfinder/pages/cart_screen.dart';
-import 'package:stayfinder/pages/favorite_screen.dart';
-import 'package:stayfinder/pages/home_screen.dart';
-import 'package:stayfinder/pages/profile_screen.dart';
+import '../pages/cart_screen.dart';
+import '../pages/favorite_screen.dart';
+import '../pages/home_screen.dart';
+import '../pages/profile_screen.dart';
+
 
 class BottomNavigationBarWidget extends StatefulWidget {
   const BottomNavigationBarWidget({super.key});
@@ -42,7 +43,7 @@ class BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           fontWeight: FontWeight.w600,
           color: Color(0xFF99462A),
         ),
-
+    
         onTap: (value) {
           currentPageIndex = value;
           setState(() {});
@@ -53,13 +54,13 @@ class BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
             icon: Icon(Icons.home_outlined),
             label: "Home",
           ),
-
+    
           BottomNavigationBarItem(
             activeIcon: Icon(Icons.shopping_cart, color: Color(0xFF99462A)),
             icon: Icon(Icons.shopping_cart_outlined),
             label: "Cart",
           ),
-
+    
           BottomNavigationBarItem(
             activeIcon: Icon(Icons.favorite_outlined, color: Color(0xFF99462A)),
             icon: Icon(Icons.favorite_outline_outlined),
@@ -76,3 +77,4 @@ class BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
     );
   }
 }
+

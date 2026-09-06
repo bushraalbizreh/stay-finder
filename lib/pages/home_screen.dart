@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stayfinder/pages/details_screen.dart';
 import 'package:stayfinder/pages/search_screen.dart';
 import 'package:stayfinder/widgets/custom_text_form_field.dart';
-
+import '../providers/stay_provider.dart';
+import '../models/stay_model.dart';
 import '../widgets/custom_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFFFAF9F6),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -85,11 +86,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Text(
                           "Where do you want to stay?",
-                          style: TextStyle(
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Montserrat-VariableFont_wght',
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
 
                         CustomTextField(
@@ -114,11 +111,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Text(
                       "Popular Destinations",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat-VariableFont_wght',
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       "See all",
@@ -188,11 +181,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Text(
                       "Special Offers",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat-VariableFont_wght',
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
                 ),
@@ -255,16 +244,9 @@ class HomeScreen extends StatelessWidget {
                               fontFamily: 'Montserrat-VariableFont_wght',
                             ),
                           ),
-                          Text(
-                            ''' Book your dream summer vacation
+                          Text(''' Book your dream summer vacation
 now and enjoy exclusive rates on
-premium villas and resorts.''',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Montserrat-VariableFont_wght',
-                            ),
-                          ),
+premium villas and resorts.''', style: Theme.of(context).textTheme.bodyMedium),
                           SizedBox(height: 32.h),
                           OutlinedButton(
                             onPressed: () {},
@@ -358,11 +340,7 @@ premium villas and resorts.''',
                   children: [
                     Text(
                       "Recommended Stays",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat-VariableFont_wght',
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       "See all",
@@ -380,95 +358,118 @@ premium villas and resorts.''',
                 SizedBox(
                   width: 390.w,
                   height: 450.h,
-                  child: ListView.builder(
-                    itemCount: 6,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailsScreen(),
-                            ),
-                          );
-                        },
-                        child: CustomCard(
-                          height: 413.h,
-                          width: 264.w,
-                          image: "assets/images/image1.png",
-                          favoriteIcon: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: AlignmentGeometry.xy(1, 1),
-                              child: CircleAvatar(
-                                maxRadius: 20,
-                                backgroundColor: Color(0xFFFAF9F6),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.favorite_outline,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                  child: Builder(
+                    builder: (context) {
+                      StayProvider stayProvider = context.watch<StayProvider>();
+                      return stayProvider.isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: const Color.fromARGB(255, 206, 71, 53),
                               ),
-                            ),
-                          ),
-                          content: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: .start,
-                              mainAxisAlignment: .start,
-                              children: [
-                                Row(
-                                  spacing: 3.w,
-                                  crossAxisAlignment: .start,
-                                  //    mainAxisAlignment: .spaceEvenly,
-                                  children: [
-                                    Text(
-                                      'Casa Verde Hotel',
-                                      style: TextStyle(
-                                        fontSize: 24.sp,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily:
-                                            'Montserrat-VariableFont_wght',
+                            )
+                          : stayProvider.errorMsg.isNotEmpty
+                          ? Center(child: Text(stayProvider.errorMsg))
+                          : ListView.builder(
+                              itemCount: stayProvider.stays.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                StayModel stay = stayProvider.stays[index];
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailsScreen(stay: stay,),
+                                      ),
+                                    );
+                                  },
+                                  child: CustomCard(
+                                    height: 413.h,
+                                    width: 362.w,
+                                    image: stay.image.toString(),
+                                    price: stay.price,
+                                    favoriteIcon: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Align(
+                                        alignment: AlignmentGeometry.xy(1, 1),
+                                        child: CircleAvatar(
+                                          maxRadius: 20,
+                                          backgroundColor: Color(0xFFFAF9F6),
+                                          child: IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(
+                                              Icons.favorite_outline,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFEFEEEB),
-                                        borderRadius: BorderRadius.circular(90),
-                                      ),
-                                      child: Row(
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment: .start,
+                                        mainAxisAlignment: .start,
                                         children: [
-                                          Icon(
-                                            Icons.star_rate,
-                                            size: 14,
-                                            color: Color(0xFFD97757),
+                                          Row(
+                                            spacing: 3.w,
+                                            crossAxisAlignment: .start,
+                                            //    mainAxisAlignment: .spaceEvenly,
+                                            children: [
+                                              Text(
+                                                stay.name!,
+                                                style: TextStyle(
+                                                  fontSize: 15.sp,
+                                                  decorationStyle:
+                                                      TextDecorationStyle
+                                                          .dotted,
+
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily:
+                                                      'Montserrat-VariableFont_wght',
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.all(2),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFEFEEEB),
+                                                  borderRadius:
+                                                      BorderRadius.circular(90),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.star_rate,
+                                                      size: 14,
+                                                      color: Color(0xFFD97757),
+                                                    ),
+                                                    Text(
+                                                      stay.rating.toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                           Text(
-                                            '4.9',
-                                            style: TextStyle(fontSize: 12),
+                                            '${stay.location!.city.toString()},${stay.location!.country.toString()}',
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'Montserrat-VariableFont_wght',
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Text(
-                                  "Amsterdam, Netherlands",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Montserrat-VariableFont_wght',
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                                );
+                              },
+                            );
                     },
                   ),
                 ),
