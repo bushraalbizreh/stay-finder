@@ -66,7 +66,6 @@ class ProfileScreen extends StatelessWidget {
                                       image: DecorationImage(
                                         fit: BoxFit.fill,
                                         image: NetworkImage(
-
                                           profile.profileImage!,
                                         ),
                                       ),
@@ -96,9 +95,7 @@ class ProfileScreen extends StatelessWidget {
                             SizedBox(
                               //  color: Colors.white,
                               // decoration: BoxDecoration(color: Colors.white),
-                              child: SizedBox(
-                                width: 350.w,
-                                height: 234.h,
+                              child:SizedBox(
                                 child: Column(
                                   crossAxisAlignment: .start,
                                   children: [

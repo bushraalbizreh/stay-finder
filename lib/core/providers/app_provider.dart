@@ -15,7 +15,7 @@ class AppProvider extends ChangeNotifier {
 
   Future<void> init() async {
     isCompleteOnBoarding = authRepo.isOnboardingComplete();
-    isAuthenticated = await authRepo.authRemoteDataSource.secureSessionStorage.hasToken();
+    isAuthenticated = await authRepo.restoreSession();
 
     notifyListeners();
   }
@@ -31,7 +31,7 @@ class AppProvider extends ChangeNotifier {
         loginModel: LoginModel(
           email: email.text.trim(),
           password: password.text,
-        ), 
+        ),
       );
       notifyListeners();
       if (isLogged) {
@@ -66,7 +66,6 @@ class AppProvider extends ChangeNotifier {
   }
 
   Future<void>completeOnBoarding() async {
-    isCompleteOnBoarding = authRepo.isOnboardingComplete();
     await authRepo.completeOnboarding();
     notifyListeners();
   }

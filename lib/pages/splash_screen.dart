@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stayfinder/pages/login_screen.dart';
-import 'package:stayfinder/widgets/navigation_buttom_bar_widget.dart';
+import 'package:stayfinder/widgets/buttom_navigation_bar_widget.dart';
 
 import '../core/providers/app_provider.dart';
 import 'on_boarding_screen.dart';
@@ -21,18 +21,21 @@ class _SplashState extends State<Splash> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Timer(Duration(seconds: 3), () {
-        context.read<AppProvider>();
-        print(
-          "isFirstTime : ${context.read<AppProvider>().isCompleteOnBoarding}",
-        );
-        print("Auth : ${context.read<AppProvider>().isAuthenticated}");
-        if (context.read<AppProvider>().isCompleteOnBoarding == false) {
+    AppProvider appProvider =    context.read<AppProvider>();
+    
+    
+   print( "isCompleteOnBoarding : ${appProvider.isCompleteOnBoarding}",);
+   print("Auth : ${appProvider.isAuthenticated}");
+
+
+
+        if (appProvider.isCompleteOnBoarding == false) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => OnboardingScreen()),
           );
         } else {
-          if (context.read<AppProvider>().isAuthenticated) {
+          if (appProvider.isAuthenticated) {
            Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => BottomNavigationBarWidget()),

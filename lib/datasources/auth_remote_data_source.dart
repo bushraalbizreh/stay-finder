@@ -25,7 +25,24 @@ class AuthRemoteDataSource {
       response = await dio.post(
         "$baseUrl/$loginEntity",
         data: loginModel.toMap(),
-        options: Options(headers: {"Content-Type": "application/json"}),
+        options:
+
+Options (
+  
+   headers:{
+    "Content-Type": "application/json"
+  } ,
+ validateStatus: (_) => true,
+ contentType: Headers.jsonContentType,
+ responseType:ResponseType.json,
+)
+
+
+
+        //  Options(headers: {
+        //   "Content-Type": "application/json"
+          
+        //   }),
       );
       print(
         "response Statuscode=============================================>> ${response.statusCode}",

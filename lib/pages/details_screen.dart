@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:stayfinder/models/stay_model.dart';
 
-import '../widgets/navigation_buttom_bar_widget.dart';
+import '../widgets/buttom_navigation_bar_widget.dart';
 
 class DetailsScreen extends StatelessWidget {
   final StayModel stay;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stayfinder/models/login_model.dart';
-import 'package:stayfinder/pages/home_screen.dart';
-import 'package:stayfinder/widgets/navigation_buttom_bar_widget.dart';
+
+import 'package:stayfinder/widgets/buttom_navigation_bar_widget.dart';
 import '../core/providers/app_provider.dart';
 import '../widgets/custom_text_form_field.dart';
 
@@ -129,76 +129,76 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
-
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 24.h),
                             child: SizedBox(
                               height: 48,
                               width: 284,
 
-                              child: Builder(
-                                builder: (context) {
-                                  AppProvider appProvider = context
-                                      .watch<AppProvider>();
-                                  return appProvider.isLoading
-                                      ? Center(
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      : appProvider.errorMessage!.isNotEmpty
-                                      ? Center(
-                                          child: Text(
-                                            appProvider.errorMessage.toString(),
-                                          ),
-                                        )
-                                      : ElevatedButton(
-                                          onPressed: () async {
-                                            if (formKey.currentState!
-                                                .validate()) {
-                                              final success = await context
-                                                  .read<AppProvider>()
-                                                  .authRepo
-                                                  .login(
-                                                    loginModel: LoginModel(
-                                                      email: email.text,
-                                                      password: password.text,
-                                                    ),
-                                                  );
-
-                                              if (success ||
-                                                  appProvider.isLogged) {
-                                                print(
-                                                  "islogged  ${appProvider.isLogged}",
-                                                );
-                                                Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        BottomNavigationBarWidget(),
-                                                  ),
-                                                );
-                                              }
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color(0xFFD97757),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadiusGeometry.circular(
-                                                    12.r,
-                                                  ),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            "LOGIN",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        );
+                              child: Consumer<AppProvider>(
+                                builder: (context, appProvider, _) {
+                                  if (appProvider.isLoading) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.deepOrange.shade400,
+                                      ),
+                                    );
+                                  } else if (appProvider
+                                      .errorMessage!
+                                      .isNotEmpty) {
+                                    Center(
+                                      child: Text(
+                                        appProvider.errorMessage.toString(),
+                                      ),
+                                    );
+                                  } else {
+                                    return ElevatedButton(
+                                      onPressed: () async {
+                                        if (formKey.currentState!.validate()) {
+                                          await appProvider
+                                              .authRepo
+                                              .authRemoteDataSource
+                                              .login(
+                                                loginModel: LoginModel(
+                                                  email: email.text,
+                                                  password: password.text,
+                                                ),
+                                              );
+                                          print(
+                                            "islogged :::::::::::::::::::::::::  ${appProvider.isLogged}",
+                                          );
+                                          if (appProvider.isLogged) {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BottomNavigationBarWidget(),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xFFD97757),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadiusGeometry.circular(
+                                                12.r,
+                                              ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        "LOGIN",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    );
+                                  }
+                                  return SizedBox.shrink();
                                 },
                               ),
                             ),
                           ),
+                        
                           SizedBox(height: 12.h),
                           SizedBox(
                             width: 284.w,

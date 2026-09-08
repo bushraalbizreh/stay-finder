@@ -66,10 +66,13 @@ class CustomCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: .end,
-                spacing: 130.w,
-                children: [?classification, ?favoriteIcon],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Row(
+                  mainAxisAlignment: .spaceBetween,
+
+                  children: [?classification, ?favoriteIcon],
+                ),
               ),
             ],
           ),

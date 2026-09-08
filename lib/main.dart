@@ -3,16 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stayfinder/providers/stay_provider.dart';
-import 'package:stayfinder/core/providers/theme_provider.dart';
-import 'package:stayfinder/core/storage/app_preferences.dart';
-import 'package:stayfinder/core/storage/secure_session_storage.dart';
-import 'package:stayfinder/core/theme/app_theme.dart';
-import 'package:stayfinder/datasources/auth_remote_data_source.dart';
-import 'package:stayfinder/core/providers/app_provider.dart';
-import 'package:stayfinder/datasources/stays_remote_data_source.dart';
-import 'package:stayfinder/repos/auth_repo.dart';
-import 'package:stayfinder/repos/stays_repo.dart';
+import '../providers/stay_provider.dart';
+import '../core/providers/theme_provider.dart';
+import '../core/storage/app_preferences.dart';
+import '../core/storage/secure_session_storage.dart';
+import '../core/theme/app_theme.dart';
+import '../datasources/auth_remote_data_source.dart';
+import '../core/providers/app_provider.dart';
+import '../datasources/stays_remote_data_source.dart';
+import '../repos/auth_repo.dart';
+import '../repos/stays_repo.dart';
 import 'core/config/get_it.dart';
 import 'pages/splash_screen.dart';
 
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+      
       providers: [
         ChangeNotifierProvider(
           create: (context) => ThemeProvider()..loadTheme(),

@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
   final bool? obscureText;
   final void Function()? onSuffixIconPressed;
   final void Function()? onTap;
+  final void Function(String)? onChange;
   final bool enabled;
 
   const CustomTextField({
@@ -31,6 +32,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText,
     this.onSuffixIconPressed,
     this.onTap,
+    this.onChange,
     this.enabled = true,
   });
 
@@ -65,6 +67,7 @@ class CustomTextField extends StatelessWidget {
           borderSide: BorderSide(color: Color(0xFFDBC1B9)),
         ),
       ),
+      onChanged: onChange,
       onTap: onTap,
       validator: validator,
       onFieldSubmitted: onFieldSubmitted,

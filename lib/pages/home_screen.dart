@@ -379,7 +379,8 @@ premium villas and resorts.''', style: Theme.of(context).textTheme.bodyMedium),
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => DetailsScreen(stay: stay,),
+                                        builder: (context) =>
+                                            DetailsScreen(stay: stay),
                                       ),
                                     );
                                   },
@@ -412,9 +413,9 @@ premium villas and resorts.''', style: Theme.of(context).textTheme.bodyMedium),
                                         mainAxisAlignment: .start,
                                         children: [
                                           Row(
-                                            spacing: 3.w,
+                                            mainAxisAlignment: .spaceBetween,
                                             crossAxisAlignment: .start,
-                                            //    mainAxisAlignment: .spaceEvenly,
+                                            
                                             children: [
                                               Text(
                                                 stay.name!,

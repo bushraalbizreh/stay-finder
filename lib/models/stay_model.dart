@@ -101,4 +101,8 @@ class StayModel {
         "available_rooms": availableRooms == null ? [] : List<dynamic>.from(availableRooms!.map((x) => x.toMap())),
         "reviews": reviews == null ? [] : List<dynamic>.from(reviews!.map((x) => x.toMap())),
     };
+
+
+
+  
 }
