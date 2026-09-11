@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/cart_screen.dart';
+import '../pages/cat_screen.dart';
 import '../pages/favorite_screen.dart';
 import '../pages/home_screen.dart';
 import '../pages/profile_screen.dart';
@@ -18,7 +18,7 @@ class BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 
   List<Widget> pages = [
     HomeScreen(),
-    CartScreen(),
+    CatScreen(),
     FavoriteScreen(),
     ProfileScreen(),
   ];

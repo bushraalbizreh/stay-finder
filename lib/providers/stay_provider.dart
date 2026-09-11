@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:stayfinder/repos/stays_repo.dart';
+import '../repos/stays_repo.dart';
 
 import '../models/stay_model.dart';
 
@@ -14,6 +14,7 @@ class StayProvider extends ChangeNotifier {
     required this.staysRepo,
   });
 
+  
   Future<void> getAllStays() async {
     isLoading = true;
     notifyListeners();
@@ -22,10 +23,12 @@ class StayProvider extends ChangeNotifier {
       stays = staysData;
       notifyListeners();
     } else {
-      errorMsg = "Failed to get stays data.................. ";
+      errorMsg = "Failed to get stays data....... ";
       notifyListeners();
     }
     isLoading = false;
     notifyListeners();
   }
+
+  
 }

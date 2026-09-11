@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
-import '../core/config/get_it.dart';
-import '../core/models/user_session.dart';
-import '../core/storage/secure_session_storage.dart';
-import '../models/stay_model.dart';
+import '../../core/config/get_it.dart';
+import '../../core/models/user_session.dart';
+import '../../core/storage/secure_session_storage.dart';
+import '../../models/stay_model.dart';
 
 class StaysRemoteDataSource {
   String baseUrl = "http://192.168.1.103:8000/api";

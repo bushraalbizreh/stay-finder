@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stayfinder/models/stay_model.dart';
-import '../providers/stay_provider.dart';
+import 'package:stayfinder/providers/favorite_provider.dart';
 import '../widgets/custom_card.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -12,33 +12,41 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        StayProvider stayProvider = context.watch<StayProvider>();
-        List<StayModel> stay = stayProvider.stays;
-
+        FavoriteProvider favoriteProvider = context.watch<FavoriteProvider>();
         return SafeArea(
           child: Scaffold(
-            appBar: AppBar(centerTitle: true, title: Text("StayFinder")),
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional.topStart,
-                    child: Text(
+            appBar: AppBar(centerTitle: true, title: Text(
                       "Favorites",
                       style: TextStyle(
                         fontSize: 32.sp,
                         fontWeight: FontWeight.w700,
                         fontFamily: 'Montserrat-VariableFont_wght',
                       ),
-                    ),
-                  ),
+                    ),),
+            body:
+            favoriteProvider.favoriteStays.isEmpty?
+            Center(child: Text("No favorite items yet"),)
+            :Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  // Align(
+                  //   alignment: AlignmentDirectional.topStart,
+                  //   child: Text(
+                  //     "Favorites",
+                  //     style: TextStyle(
+                  //       fontSize: 32.sp,
+                  //       fontWeight: FontWeight.w700,
+                  //       fontFamily: 'Montserrat-VariableFont_wght',
+                  //     ),
+                  //   ),
+                  // ),
 
                   Expanded(
                     child: ListView.builder(
-                      itemCount: stayProvider.stays.length,
+                      itemCount: favoriteProvider.favoriteStays.length,
                       itemBuilder: (context, index) {
-                        StayModel stay = stayProvider.stays[index];
+                        StayModel stay = favoriteProvider.favoriteStays[index];
                         return CustomCard(
                           imageWidth: 370.w,
                           imageHeight: 260.h,
@@ -53,13 +61,34 @@ class FavoriteScreen extends StatelessWidget {
                               child: CircleAvatar(
                                 maxRadius: 20,
                                 backgroundColor: Color(0xFFFAF9F6),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.favorite_outline,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                child:  Consumer<FavoriteProvider>(
+                                      builder: (context, favoriteProvider, _) =>
+                                          IconButton(
+                                            onPressed: () {
+                                              favoriteProvider
+                                                  .updateStateFavoriteStay(
+                                                    stay: stay,
+                                                  );
+                                            },
+                                            icon:
+                                                favoriteProvider.isStayFavorite(
+                                                  stay,
+                                                )
+                                                ? Icon(
+                                                    Icons.favorite,
+                                                    color: const Color.fromARGB(
+                                                      255,
+                                                      233,
+                                                      94,
+                                                      51,
+                                                    ),
+                                                  )
+                                                : Icon(
+                                                    Icons.favorite_outline,
+                                                    color: Colors.black,
+                                                  ),
+                                          ),
+                                    ),
                               ),
                             ),
                           ),

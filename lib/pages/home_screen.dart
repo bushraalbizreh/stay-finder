@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stayfinder/pages/details_screen.dart';
 import 'package:stayfinder/pages/search_screen.dart';
+import 'package:stayfinder/providers/favorite_provider.dart';
 import 'package:stayfinder/widgets/custom_text_form_field.dart';
 import '../providers/stay_provider.dart';
 import '../models/stay_model.dart';
@@ -203,7 +204,7 @@ class HomeScreen extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadiusGeometry.circular(12),
                           child: Image.asset(
-                            "assets/images/image1.png",
+                            "assets/images/offer.png",
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -212,26 +213,29 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: .start,
 
                         children: [
-                          SizedBox(
-                            height: 30.h,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Color.fromARGB(
-                                  255,
-                                  247,
-                                  190,
-                                  171,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadiusGeometry.circular(
-                                    999.r,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: SizedBox(
+                              height: 30.h,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color.fromARGB(
+                                    255,
+                                    247,
+                                    190,
+                                    171,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadiusGeometry.circular(
+                                      999.r,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              child: Text(
-                                "Summer Escape",
-                                style: TextStyle(color: Color(0xFFD97757)),
+                                child: Text(
+                                  "Summer Escape",
+                                  style: TextStyle(color: Color(0xFFD97757)),
+                                ),
                               ),
                             ),
                           ),
@@ -396,12 +400,38 @@ premium villas and resorts.''', style: Theme.of(context).textTheme.bodyMedium),
                                         child: CircleAvatar(
                                           maxRadius: 20,
                                           backgroundColor: Color(0xFFFAF9F6),
-                                          child: IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(
-                                              Icons.favorite_outline,
-                                              color: Colors.black,
-                                            ),
+                                          child: Consumer<FavoriteProvider>(
+                                            builder:
+                                                (
+                                                  context,
+                                                  favoriteProvider,
+                                                  child,
+                                                ) => IconButton(
+                                                  onPressed: () {
+                                                    favoriteProvider
+                                                        .updateStateFavoriteStay(
+                                                          stay: stay,
+                                                        );
+                                                  },
+                                                  icon:
+                                                      favoriteProvider
+                                                          .isStayFavorite(stay)
+                                                      ? Icon(
+                                                          Icons.favorite,
+                                                          color:
+                                                              const Color.fromARGB(
+                                                                255,
+                                                                233,
+                                                                94,
+                                                                51,
+                                                              ),
+                                                        )
+                                                      : Icon(
+                                                          Icons
+                                                              .favorite_outline,
+                                                          color: Colors.black,
+                                                        ),
+                                                ),
                                           ),
                                         ),
                                       ),
@@ -415,7 +445,7 @@ premium villas and resorts.''', style: Theme.of(context).textTheme.bodyMedium),
                                           Row(
                                             mainAxisAlignment: .spaceBetween,
                                             crossAxisAlignment: .start,
-                                            
+
                                             children: [
                                               Text(
                                                 stay.name!,

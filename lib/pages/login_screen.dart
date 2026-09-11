@@ -143,21 +143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: Colors.deepOrange.shade400,
                                       ),
                                     );
-                                  } else if (appProvider
-                                      .errorMessage!
-                                      .isNotEmpty) {
-                                    Center(
-                                      child: Text(
-                                        appProvider.errorMessage.toString(),
-                                      ),
-                                    );
-                                  } else {
+                                  }  else {
                                     return ElevatedButton(
                                       onPressed: () async {
                                         if (formKey.currentState!.validate()) {
-                                          await appProvider
-                                              .authRepo
-                                              .authRemoteDataSource
+                                         await appProvider
                                               .login(
                                                 loginModel: LoginModel(
                                                   email: email.text,
@@ -167,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           print(
                                             "islogged :::::::::::::::::::::::::  ${appProvider.isLogged}",
                                           );
-                                          if (appProvider.isLogged) {
+                                          if ( appProvider.isLogged) {
                                             Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
@@ -176,6 +166,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ),
                                             );
                                           }
+                                          else if (appProvider
+                                      .errorMessage!
+                                      .isNotEmpty) {
+                                  
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          appProvider.errorMessage.toString(),
+                                        ),
+                                      ),
+                                    );
+                                    
+                                  }
                                         }
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -193,12 +196,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     );
                                   }
-                                  return SizedBox.shrink();
+                                  
                                 },
                               ),
                             ),
                           ),
-                        
+
                           SizedBox(height: 12.h),
                           SizedBox(
                             width: 284.w,

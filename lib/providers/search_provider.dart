@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:stayfinder/core/storage/secure_session_storage.dart';
-import 'package:stayfinder/datasources/stays_remote_data_source.dart';
+import 'package:stayfinder/datasources/remote_data_source/stays_remote_data_source.dart';
 import 'package:stayfinder/models/stay_model.dart';
 
 

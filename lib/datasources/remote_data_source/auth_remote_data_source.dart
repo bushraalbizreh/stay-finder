@@ -1,10 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
-import '../core/storage/app_preferences.dart';
-import '../core/storage/secure_session_storage.dart';
-import '../models/login_model.dart';
-import '../core/config/get_it.dart';
-import '../core/models/user_session.dart';
+import '../../core/storage/app_preferences.dart';
+import '../../core/storage/secure_session_storage.dart';
+import '../../models/login_model.dart';
+import '../../core/config/get_it.dart';
+import '../../core/models/user_session.dart';
 
 class AuthRemoteDataSource {
   SecureSessionStorage secureSessionStorage;
@@ -25,24 +24,12 @@ class AuthRemoteDataSource {
       response = await dio.post(
         "$baseUrl/$loginEntity",
         data: loginModel.toMap(),
-        options:
-
-Options (
-  
-   headers:{
-    "Content-Type": "application/json"
-  } ,
- validateStatus: (_) => true,
- contentType: Headers.jsonContentType,
- responseType:ResponseType.json,
-)
-
-
-
-        //  Options(headers: {
-        //   "Content-Type": "application/json"
-          
-        //   }),
+        options: Options(
+          headers: {"Content-Type": "application/json"},
+          validateStatus: (_) => true,
+          contentType: Headers.jsonContentType,
+          responseType: ResponseType.json,
+        ),
       );
       print(
         "response Statuscode=============================================>> ${response.statusCode}",
@@ -79,6 +66,7 @@ Options (
 
         if (response.statusCode == 200) {
           secureSessionStorage.clearSession();
+
           print(
             "Clear Success with statuscode====================================>> ${response.statusCode}",
           );

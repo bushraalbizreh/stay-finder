@@ -1,9 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:stayfinder/models/stay_model.dart';
-
+import 'package:provider/provider.dart';
+import 'package:stayfinder/providers/favorite_provider.dart';
+import '../models/stay_model.dart';
+import '../providers/cart_provider.dart';
 import '../widgets/buttom_navigation_bar_widget.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -67,12 +68,33 @@ class DetailsScreen extends StatelessWidget {
                                   CircleAvatar(
                                     maxRadius: 20,
                                     backgroundColor: Color(0xFFFAF9F6),
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.favorite_outline,
-                                        color: Colors.black,
-                                      ),
+                                    child: Consumer<FavoriteProvider>(
+                                      builder: (context, favoriteProvider, _) =>
+                                          IconButton(
+                                            onPressed: () {
+                                              favoriteProvider
+                                                  .updateStateFavoriteStay(
+                                                    stay: stay,
+                                                  );
+                                            },
+                                            icon:
+                                                favoriteProvider.isStayFavorite(
+                                                  stay,
+                                                )
+                                                ? Icon(
+                                                    Icons.favorite,
+                                                    color: const Color.fromARGB(
+                                                      255,
+                                                      233,
+                                                      94,
+                                                      51,
+                                                    ),
+                                                  )
+                                                : Icon(
+                                                    Icons.favorite_outline,
+                                                    color: Colors.black,
+                                                  ),
+                                          ),
                                     ),
                                   ),
 
@@ -318,7 +340,7 @@ class DetailsScreen extends StatelessWidget {
                             ),
                             itemBuilder: (context, index) {
                               return Container(
-                                width: 370.w,
+                                width: 400.w,
                                 // 348.w,
                                 height: 450.h,
                                 margin: EdgeInsets.all(4),
@@ -381,7 +403,7 @@ class DetailsScreen extends StatelessWidget {
 
                                           SizedBox(height: 10.h),
                                           Row(
-                                            spacing: 5,
+                                            mainAxisAlignment: .spaceBetween,
                                             children: [
                                               Chip(
                                                 backgroundColor: Color(
@@ -601,6 +623,7 @@ class DetailsScreen extends StatelessWidget {
                   Container(
                     height: 80.h,
                     width: 390.w,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     color: Color(0XFFFAF9F6),
                     child: Align(
                       alignment: AlignmentGeometry.bottomCenter,
@@ -608,8 +631,8 @@ class DetailsScreen extends StatelessWidget {
                         mainAxisAlignment: .center,
                         children: [
                           Row(
-                            mainAxisAlignment: .spaceEvenly,
-                            spacing: 100.w,
+                            mainAxisAlignment: .spaceBetween,
+
                             children: [
                               Column(
                                 children: [
@@ -617,14 +640,45 @@ class DetailsScreen extends StatelessWidget {
                                   Text(stay.availableDays!),
                                 ],
                               ),
-                              FilledButton(
-                                style: FilledButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Color(0xFF99462A),
-                                ),
-                                onPressed: () {},
-                                child: Text("Reserve"),
+
+                              Builder(
+                                builder: (context) {
+                                  CartProvider cartProvider = context
+                                      .watch<CartProvider>();
+
+                                  return IgnorePointer(
+                                    
+                                    ignoring: cartProvider.isItemInCart(stay: stay)?true:false,
+                                  
+                                    child:
+                                     FilledButton(
+
+                                    style: FilledButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: cartProvider.isItemExist?Colors.grey : Color(0xFF99462A),
+                                    ),
+                                    onPressed: () {
+                                      cartProvider.addToCart(itemCart: stay);
+                                      print(
+                                        "isItemExist  Builder? : ${cartProvider.isItemExist}",
+                                      );
+                                      print(
+                                        "All Items in Cart: ${cartProvider.itemsCart}",
+                                      );
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text("Added to cart successfully"),
+                                        ),
+                                      );
+                                    },
+                                    child: Text("Reserve"),
+                                  )
+                                  );
+                                },
                               ),
+                              
                             ],
                           ),
                         ],

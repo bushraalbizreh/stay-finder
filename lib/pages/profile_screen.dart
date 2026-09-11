@@ -6,7 +6,7 @@ import '../core/providers/app_provider.dart';
 import '../providers/profile_provider.dart';
 import '../core/providers/theme_provider.dart';
 import '../core/storage/secure_session_storage.dart';
-import '../datasources/profile_remote_data_source.dart';
+import '../datasources/remote_data_source/profile_remote_data_source.dart';
 import '../models/profile_model.dart';
 import '../pages/login_screen.dart';
 import '../repos/profile_repo.dart';

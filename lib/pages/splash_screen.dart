@@ -20,8 +20,9 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Timer(Duration(seconds: 3), () {
+      Timer(Duration(seconds: 3), () async{
     AppProvider appProvider =    context.read<AppProvider>();
+    await context.read<AppProvider>().init();
     
     
    print( "isCompleteOnBoarding : ${appProvider.isCompleteOnBoarding}",);

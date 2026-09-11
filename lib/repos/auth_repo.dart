@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:stayfinder/datasources/auth_remote_data_source.dart';
+import 'package:stayfinder/datasources/remote_data_source/auth_remote_data_source.dart';
 import 'package:stayfinder/models/login_model.dart';
 
 import '../core/models/user_session.dart';

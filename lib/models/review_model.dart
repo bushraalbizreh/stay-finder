@@ -1,8 +1,16 @@
 import 'dart:convert';
 
+import 'package:hive_flutter/adapters.dart';
+
+part 'review_model.g.dart';
+
+@HiveType(typeId: 1)
 class Review {
+    @HiveField(0)
     final String? reviewerName;
+    @HiveField(1)
     final String? reviewDate;
+    @HiveField(2)
     final String? reviewContent;
   Review({
     this.reviewerName,

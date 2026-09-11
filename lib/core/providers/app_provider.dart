@@ -22,25 +22,18 @@ class AppProvider extends ChangeNotifier {
 
   Future<bool> login({required LoginModel loginModel}) async {
     try {
-      TextEditingController email = TextEditingController();
-      TextEditingController password = TextEditingController();
       isLoading = true;
       notifyListeners();
-
       isLogged = await authRepo.login(
         loginModel: LoginModel(
-          email: email.text.trim(),
-          password: password.text,
+          email: loginModel.email,
+          password: loginModel.password,
         ),
       );
+      isLoading = false;
       notifyListeners();
-      if (isLogged) {
-        //  isAuthenticated = true;
-
-       // notifyListeners();
-      } else {
-        //   isAuthenticated = false;
-        errorMessage = "Login Failed";
+      if (!isLogged) {
+        errorMessage = "Check your email and password";
         notifyListeners();
       }
       return isLogged;
@@ -55,17 +48,15 @@ class AppProvider extends ChangeNotifier {
     isLoading = true;
     bool isLogout = await authRepo.logout();
     if (isLogout) {
-      //   isAuthenticated = false;
       notifyListeners();
     } else {
-      ///   isAuthenticated = true;
       errorMessage = "Logout Failed";
       notifyListeners();
     }
     return isLogout;
   }
 
-  Future<void>completeOnBoarding() async {
+  Future<void> completeOnBoarding() async {
     await authRepo.completeOnboarding();
     notifyListeners();
   }
