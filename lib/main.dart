@@ -4,13 +4,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stayfinder/datasources/local_data_source/cart_local_data_source.dart';
-import 'package:stayfinder/datasources/local_data_source/favorite_local_data_source.dart';
-import 'package:stayfinder/models/available_room_model.dart';
-import 'package:stayfinder/models/location_model.dart';
-import 'package:stayfinder/models/review_model.dart';
-import 'package:stayfinder/repos/cart_repo.dart';
-import 'package:stayfinder/repos/favorite_repo.dart';
+import '../datasources/local_data_source/cart_local_data_source.dart';
+import '../datasources/local_data_source/favorite_local_data_source.dart';
+import '../models/available_room_model.dart';
+import '../models/location_model.dart';
+import '../models/review_model.dart';
+import '../repos/cart_repo.dart';
+import '../repos/favorite_repo.dart';
 import '../providers/favorite_provider.dart';
 import '../core/constants/app_keys.dart';
 import '../models/stay_model.dart';
@@ -39,7 +39,9 @@ Future<void> main() async {
   await setup();
 
   Box<StayModel> cartBox = await Hive.openBox<StayModel>(AppKeys.cartBox);
-  Box<StayModel> favoriteBox = await Hive.openBox<StayModel>(AppKeys.favoriteBox);
+  Box<StayModel> favoriteBox = await Hive.openBox<StayModel>(
+    AppKeys.favoriteBox,
+  );
   runApp(MyApp(cartBox: cartBox, favoriteBox: favoriteBox));
 }
 
@@ -81,11 +83,13 @@ class MyApp extends StatelessWidget {
           )..getAllStays(),
         ),
 
-ChangeNotifierProvider(create: (context) => CartProvider(cartRepo: CartRepo(cartLocalDataSource: CartLocalDataSource(cartBox: cartBox)))..getAllItemsInCart(),),
-        // ChangeNotifierProvider(
-        //   create: (context) =>
-        //       CartProvider(cartBoxProvider: cartBox)..getAllItemsInCart(),
-        // ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(
+            cartRepo: CartRepo(
+              cartLocalDataSource: CartLocalDataSource(cartBox: cartBox),
+            ),
+          )..getAllItemsInCart(),
+        ),
 
         ChangeNotifierProvider(
           create: (context) => FavoriteProvider(

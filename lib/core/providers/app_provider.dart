@@ -14,9 +14,12 @@ class AppProvider extends ChangeNotifier {
   AppProvider({required this.authRepo});
 
   Future<void> init() async {
-    isCompleteOnBoarding = authRepo.isOnboardingComplete();
-    isAuthenticated = await authRepo.restoreSession();
-
+    isCompleteOnBoarding =
+    false;
+    // authRepo.isOnboardingComplete();
+    isAuthenticated =
+   //  await authRepo.restoreSession();
+    false;
     notifyListeners();
   }
 

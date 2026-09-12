@@ -280,7 +280,7 @@ class DetailsScreen extends StatelessWidget {
                                 Flexible(
                                   child: ListTile(
                                     leading: Icon(
-                                      Icons.local_drink_outlined,
+                                      Icons.airline_seat_recline_extra,
                                       color: Color(0xFF55433D),
                                     ),
                                     title: Text(
@@ -647,38 +647,84 @@ class DetailsScreen extends StatelessWidget {
                                       .watch<CartProvider>();
 
                                   return IgnorePointer(
-                                    
-                                    ignoring: cartProvider.isItemInCart(stay: stay)?true:false,
-                                  
-                                    child:
-                                     FilledButton(
+                                    ignoring:
+                                        cartProvider.isItemInCart(stay: stay)
+                                        ? true
+                                        : false,
 
-                                    style: FilledButton.styleFrom(
-                                      foregroundColor: Colors.white,
-                                      backgroundColor: cartProvider.isItemExist?Colors.grey : Color(0xFF99462A),
+                                    child: FilledButton(
+                                      style: FilledButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor:
+                                            cartProvider.isItemExist
+                                            ? Colors.grey
+                                            : Color(0xFF99462A),
+                                      ),
+                                      onPressed: () {
+                                    
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              content: Text(
+                                                "Do you really want to book this residential unit?",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  child: Text(
+                                                    "Cancel",
+                                                    style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: Text(
+                                                    "Reserve",
+                                                    style: TextStyle(
+                                                      color: Colors.green,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    cartProvider.addToCart(
+                                                      itemCart: stay,
+                                                    );
+                                                    Navigator.pop(context);
+                                                    ScaffoldMessenger.of(
+                                                      context,
+                                                    ).showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          "Added to cart successfully",
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: cartProvider.isItemInCart(stay: stay)?
+                                       Text("Reserved"):Text("Reserve"),
                                     ),
-                                    onPressed: () {
-                                      cartProvider.addToCart(itemCart: stay);
-                                      print(
-                                        "isItemExist  Builder? : ${cartProvider.isItemExist}",
-                                      );
-                                      print(
-                                        "All Items in Cart: ${cartProvider.itemsCart}",
-                                      );
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text("Added to cart successfully"),
-                                        ),
-                                      );
-                                    },
-                                    child: Text("Reserve"),
-                                  )
                                   );
                                 },
                               ),
-                              
                             ],
                           ),
                         ],

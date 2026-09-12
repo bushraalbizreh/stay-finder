@@ -95,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                             SizedBox(
                               //  color: Colors.white,
                               // decoration: BoxDecoration(color: Colors.white),
-                              child:SizedBox(
+                              child: SizedBox(
                                 child: Column(
                                   crossAxisAlignment: .start,
                                   children: [
@@ -246,7 +246,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                           ),
                                       title: Text(
-                                        'Theme',
+                                        'Dark Theme',
                                         style: Theme.of(
                                           context,
                                         ).textTheme.bodySmall,
@@ -352,8 +352,8 @@ class ProfileScreen extends StatelessWidget {
                                             ),
                                             Text(
                                               '''Are you sure you want to logout? You
-will need to enter your credentials again
-to access your account.''',
+                                                 will need to enter your credentials again
+                                                  to access your account.''',
                                             ),
                                             SizedBox(height: 24.h),
                                             SizedBox(
@@ -376,9 +376,10 @@ to access your account.''',
                                                                 .authRepo
                                                                 .logout();
 
-                                                        // if (!mounted) return;
+                                      
 
                                                         if (success) {
+
                                                           Navigator.pushReplacement(
                                                             context,
                                                             MaterialPageRoute(

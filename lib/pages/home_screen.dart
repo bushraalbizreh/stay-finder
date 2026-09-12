@@ -87,7 +87,12 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Text(
                           "Where do you want to stay?",
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                            fontFamily: 'Montserrat-VariableFont_wght',
+                          ),
                         ),
 
                         CustomTextField(

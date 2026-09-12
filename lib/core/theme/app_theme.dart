@@ -49,46 +49,20 @@ class AppTheme {
     ),
   );
   static ThemeData darkTheme = ThemeData(
-    scaffoldBackgroundColor: Color(0xFF242424),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Color.fromARGB(255, 71, 63, 63),
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Color.fromARGB(255, 248, 114, 61),
+      brightness: Brightness.dark,
     ),
-    textTheme: TextTheme(
-      bodyMedium: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: Colors.white,
-      ),
-      bodyLarge: TextStyle(
-        fontSize: 24.sp,
-        fontWeight: FontWeight.w700,
-        color: Colors.white,
-        fontFamily: 'Montserrat-VariableFont_wght',
-      ),
-      titleMedium: TextStyle(
-        fontSize: 20.sp,
-        fontWeight: FontWeight.w600,
-        color: Colors.white,
-        fontFamily: 'Montserrat-VariableFont_wght',
-      ),
-      labelMedium: TextStyle(fontSize: 16, color: Colors.white),
-      bodySmall: TextStyle(fontSize: 14, color: Colors.white),
-      headlineLarge: TextStyle(
-        fontSize: 18,
-        color: Colors.white,
-        fontFamily: 'Inter-Italic-VariableFont_opsz,wght',
-      ),
+    appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
+    textTheme: TextTheme(displaySmall: TextStyle(color: Colors.blueGrey)),
+    cardTheme: CardThemeData(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
-
-    primaryIconTheme: IconThemeData(color: Colors.white),
-
-    appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(
-        color: Color(0xFF99462A),
-        fontSize: 32.spMin,
-        fontWeight: FontWeight.w700,
-        fontFamily: 'Montserrat-VariableFont_wght',
-      ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+      filled: true,
     ),
   );
 }

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stayfinder/models/stay_model.dart';
 import 'package:stayfinder/providers/cart_provider.dart';
 
-
 class CatScreen extends StatelessWidget {
   const CatScreen({super.key});
 
@@ -18,7 +17,7 @@ class CatScreen extends StatelessWidget {
             appBar: AppBar(
               centerTitle: true,
               title: Text(
-                "Shopping Cart",
+                "Reservations",
                 style: TextStyle(
                   fontSize: 32.sp,
                   fontWeight: FontWeight.w700,
@@ -33,17 +32,6 @@ class CatScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          // Align(
-                          //   alignment: AlignmentDirectional.topStart,
-                          //   child: Text(
-                          //     "Shopping Cart",
-                          //     style: TextStyle(
-                          //       fontSize: 32.sp,
-                          //       fontWeight: FontWeight.w700,
-                          //       fontFamily: 'Montserrat-VariableFont_wght',
-                          //     ),
-                          //   ),
-                          // ),
                           SizedBox(
                             height: 550,
                             child: ListView.builder(
@@ -107,17 +95,71 @@ class CatScreen extends StatelessWidget {
                                                 ),
                                                 IconButton(
                                                   onPressed: () async {
-                                                    cartProvider.removeFromCart(
-                                                      cartItemRemoved: stayCart,
-                                                    );
-                                                    ScaffoldMessenger.of(
-                                                      context,
-                                                    ).showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          "removed from the cart Successfully",
-                                                        ),
-                                                      ),
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext context) {
+                                                        return AlertDialog(
+                                                          content: Text(
+                                                            "Do you really want to remove this unit from the bookings?",
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          actions: [
+                                                            TextButton(
+                                                              child: Text(
+                                                                "Cancel",
+                                                                style: TextStyle(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                  context,
+                                                                );
+                                                              },
+                                                            ),
+                                                            TextButton(
+                                                              child: Text(
+                                                                "Remove",
+                                                                style: TextStyle(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                cartProvider
+                                                                    .removeFromCart(
+                                                                      cartItemRemoved:
+                                                                          stayCart,
+                                                                    );
+                                                                Navigator.pop(context);
+                                                                ScaffoldMessenger.of(
+                                                                  context,
+                                                                ).showSnackBar(
+                                                                  SnackBar(
+                                                                    content: Text(
+                                                                      "removed from the cart Successfully",
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
                                                     );
                                                   },
                                                   icon: Icon(
@@ -322,7 +364,7 @@ class CatScreen extends StatelessWidget {
 
                                       Text(
                                         cartProvider.getTotalPrice().toString(),
-                                           
+
                                         style: TextStyle(
                                           color: Color(0xFF99462A),
                                           fontSize: 32.sp,
